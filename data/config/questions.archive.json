@@ -1,0 +1,44 @@
+[
+  {
+    "id": "mental_demand",
+    "title": "정신적 요구 (Mental Demand)",
+    "description": "과제를 수행하는 동안 얼마나 많은 정신적, 지각적 활동이 필요했습니까? (예: 생각하기, 결정하기, 계산하기, 기억하기, 찾기, 조사하기 등) 과제가 쉬웠습니까, 어려웠습니까? 단순했습니까, 복잡했습니까? 힘들었습니까, 여유로웠습니까?",
+    "leftLabel": "낮음",
+    "rightLabel": "높음"
+  },
+  {
+    "id": "physical_demand",
+    "title": "신체적 요구 (Physical Demand)",
+    "description": "과제를 수행하는 동안 얼마나 많은 신체적 활동이 필요했습니까? (예: 밀기, 당기기, 돌리기, 조작하기, 활성화하기 등) 과제가 쉬웠습니까, 어려웠습니까? 느리고 여유로웠습니까, 빠르고 힘들었습니까?",
+    "leftLabel": "낮음",
+    "rightLabel": "높음"
+  },
+  {
+    "id": "temporal_demand",
+    "title": "시간적 요구 (Temporal Demand)",
+    "description": "과제가 진행되는 속도 또는 단계의 빠르기 때문에 시간적 압박을 얼마나 느꼈습니까? 과제의 속도가 느리고 여유로웠습니까, 빠르고 급박했습니까?",
+    "leftLabel": "낮음",
+    "rightLabel": "높음"
+  },
+  {
+    "id": "performance",
+    "title": "수행도 (Performance)",
+    "description": "과제 목표를 달성하는 데 있어서 얼마나 성공적이었다고 생각하십니까? 자신의 수행에 얼마나 만족하십니까?",
+    "leftLabel": "좋음",
+    "rightLabel": "나쁨"
+  },
+  {
+    "id": "effort",
+    "title": "노력 (Effort)",
+    "description": "과제 수행 수준을 달성하기 위해 (정신적, 신체적으로) 얼마나 열심히 일해야 했습니까?",
+    "leftLabel": "낮음",
+    "rightLabel": "높음"
+  },
+  {
+    "id": "frustration",
+    "title": "좌절감 (Frustration)",
+    "description": "과제를 수행하는 동안 얼마나 불안하고, 스트레스를 받고, 짜증나고, 화가 났습니까? 반대로 얼마나 안전하고, 만족스럽고, 편안하고, 자기만족감을 느꼈습니까?",
+    "leftLabel": "낮음",
+    "rightLabel": "높음"
+  }
+]
