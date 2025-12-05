@@ -17,7 +17,14 @@ const questions: Question[] = questionsData as Question[];
 
 export default function SurveyPage() {
   const router = useRouter();
-  const [responses, setResponses] = useState<{ [key: string]: number }>({});
+  const [responses, setResponses] = useState<{ [key: string]: number }>(() => {
+    // Initialize all responses with default value 50
+    const initial: { [key: string]: number } = {};
+    questions.forEach((q) => {
+      initial[q.id] = 50;
+    });
+    return initial;
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSliderChange = (questionId: string, value: number) => {
@@ -101,13 +108,23 @@ export default function SurveyPage() {
               {/* Tick marks */}
               <div className="mt-1 relative z-0" style={{ paddingLeft: '9px', paddingRight: '5px' }}>
                 <div className="relative h-4" style={{ width: 'calc(100% - 6px)' }}>
-                  {Array.from({ length: 21 }, (_, i) => i * 5).map((tick) => (
-                    <div
-                      key={tick}
-                      className="absolute w-0.5 bg-white/60"
-                      style={{ left: `${tick}%`, height: '27px', transform: 'translateY(-20px)' }}
-                    ></div>
-                  ))}
+                  {Array.from({ length: 21 }, (_, i) => i * 5).map((tick) => {
+                    // 0, 50, 100 are large ticks (27px)
+                    // Other 10-unit ticks are 50% size (13.5px)
+                    // 5-unit ticks remain small (13.5px)
+                    const isLargeTick = tick === 0 || tick === 50 || tick === 100;
+                    return (
+                      <div
+                        key={tick}
+                        className="absolute w-0.5 bg-white/60"
+                        style={{
+                          left: `${tick}%`,
+                          height: isLargeTick ? '27px' : '13.5px',
+                          transform: 'translateY(-20px)'
+                        }}
+                      ></div>
+                    );
+                  })}
                 </div>
               </div>
             </div>
