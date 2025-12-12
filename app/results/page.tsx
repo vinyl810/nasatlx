@@ -17,6 +17,8 @@ interface SurveyResult {
   filename: string;
   timestamp: string;
   ip: string;
+  participantId?: string;
+  participantName?: string;
   responses: {
     [key: string]: number;
   };
@@ -56,12 +58,16 @@ export default function ResultsPage() {
     if (results.length === 0) return;
 
     const headers = [
+      "참가자 번호",
+      "이름",
       "제출 시간",
       "IP 주소",
       ...questions.map(q => q.title),
     ];
 
     const rows = results.map((result) => [
+      result.participantId || "",
+      result.participantName || "",
       new Date(result.timestamp).toLocaleString("ko-KR"),
       result.ip,
       ...questions.map(q => result.responses?.[q.id] !== undefined ? result.responses[q.id] : ""),
@@ -168,6 +174,12 @@ export default function ResultsPage() {
                         #
                       </th>
                       <th className="border border-white/20 px-4 py-3 text-left text-sm font-bold text-white">
+                        참가자 번호
+                      </th>
+                      <th className="border border-white/20 px-4 py-3 text-left text-sm font-bold text-white">
+                        이름
+                      </th>
+                      <th className="border border-white/20 px-4 py-3 text-left text-sm font-bold text-white">
                         제출 시간
                       </th>
                       <th className="border border-white/20 px-4 py-3 text-left text-sm font-bold text-white">
@@ -191,6 +203,12 @@ export default function ResultsPage() {
                       >
                         <td className="border border-white/20 px-4 py-3 text-sm text-white/80">
                           {results.length - index}
+                        </td>
+                        <td className="border border-white/20 px-4 py-3 text-sm text-white/80">
+                          {result.participantId || "-"}
+                        </td>
+                        <td className="border border-white/20 px-4 py-3 text-sm text-white/80">
+                          {result.participantName || "-"}
                         </td>
                         <td className="border border-white/20 px-4 py-3 text-sm text-white/80 whitespace-nowrap">
                           {new Date(result.timestamp).toLocaleString("ko-KR")}

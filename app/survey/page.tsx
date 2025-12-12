@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ChevronRight, Loader2 } from "lucide-react";
 import questionsData from "@/data/config/questions.json";
@@ -26,6 +26,23 @@ export default function SurveyPage() {
     return initial;
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [participantId, setParticipantId] = useState("");
+  const [participantName, setParticipantName] = useState("");
+
+  useEffect(() => {
+    // Load participant info from localStorage
+    const id = localStorage.getItem("participantId");
+    const name = localStorage.getItem("participantName");
+
+    if (!id || !name) {
+      // Redirect to consent page if participant info is missing
+      router.push("/consent");
+      return;
+    }
+
+    setParticipantId(id);
+    setParticipantName(name);
+  }, [router]);
 
   const handleSliderChange = (questionId: string, value: number) => {
     setResponses((prev) => ({
@@ -52,7 +69,11 @@ export default function SurveyPage() {
       const res = await fetch("/api/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(responses),
+        body: JSON.stringify({
+          participantId,
+          participantName,
+          responses,
+        }),
       });
 
       if (res.ok) {

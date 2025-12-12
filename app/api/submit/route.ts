@@ -5,6 +5,7 @@ import path from "path";
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
+    const { participantId, participantName, responses } = body;
 
     // IP 주소 가져오기
     const ip = req.headers.get("x-forwarded-for") ||
@@ -18,7 +19,9 @@ export async function POST(req: NextRequest) {
     const data = {
       timestamp,
       ip,
-      responses: body,
+      participantId,
+      participantName,
+      responses,
     };
 
     // survey-results 디렉토리 경로 (프로젝트 루트 기준)
@@ -31,10 +34,10 @@ export async function POST(req: NextRequest) {
       await fs.mkdir(dataDir, { recursive: true });
     }
 
-    // 파일명: IP 주소와 타임스탬프 기반
-    const sanitizedIp = ip.replace(/[:.]/g, "-");
+    // 파일명: 참가자 ID와 타임스탬프 기반
+    const sanitizedId = participantId.replace(/[^a-zA-Z0-9]/g, "_");
     const sanitizedTimestamp = timestamp.replace(/[:.]/g, "-");
-    const filename = `survey_${sanitizedIp}_${sanitizedTimestamp}.json`;
+    const filename = `survey_${sanitizedId}_${sanitizedTimestamp}.json`;
     const filePath = path.join(dataDir, filename);
 
     // 데이터를 JSON 파일로 저장
