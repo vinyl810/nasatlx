@@ -5,7 +5,7 @@ import path from "path";
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { participantId, participantName, responses } = body;
+    const { participantId, participantName, condition, responses } = body;
 
     // IP 주소 가져오기
     const ip = req.headers.get("x-forwarded-for") ||
@@ -21,6 +21,7 @@ export async function POST(req: NextRequest) {
       ip,
       participantId,
       participantName,
+      condition,
       responses,
     };
 

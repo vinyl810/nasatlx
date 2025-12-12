@@ -28,13 +28,15 @@ export default function SurveyPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [participantId, setParticipantId] = useState("");
   const [participantName, setParticipantName] = useState("");
+  const [condition, setCondition] = useState("");
 
   useEffect(() => {
     // Load participant info from localStorage
     const id = localStorage.getItem("participantId");
     const name = localStorage.getItem("participantName");
+    const cond = localStorage.getItem("condition");
 
-    if (!id || !name) {
+    if (!id || !name || !cond) {
       // Redirect to consent page if participant info is missing
       router.push("/consent");
       return;
@@ -42,6 +44,7 @@ export default function SurveyPage() {
 
     setParticipantId(id);
     setParticipantName(name);
+    setCondition(cond);
   }, [router]);
 
   const handleSliderChange = (questionId: string, value: number) => {
@@ -72,6 +75,7 @@ export default function SurveyPage() {
         body: JSON.stringify({
           participantId,
           participantName,
+          condition,
           responses,
         }),
       });

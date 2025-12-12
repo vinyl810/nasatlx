@@ -8,6 +8,7 @@ export default function ConsentPage() {
   const [isAgreed, setIsAgreed] = useState(false);
   const [participantId, setParticipantId] = useState("");
   const [participantName, setParticipantName] = useState("");
+  const [condition, setCondition] = useState("");
   const router = useRouter();
 
   const handleStartClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -21,9 +22,15 @@ export default function ConsentPage() {
       alert("참가자 번호와 이름을 입력해 주세요.");
       return;
     }
+    if (!condition) {
+      e.preventDefault();
+      alert("조건을 선택해 주세요.");
+      return;
+    }
     // Save participant info to localStorage
     localStorage.setItem("participantId", participantId.trim());
     localStorage.setItem("participantName", participantName.trim());
+    localStorage.setItem("condition", condition);
     router.push("/survey");
   };
 
@@ -36,7 +43,7 @@ export default function ConsentPage() {
         </h1>
       </div>
 
-      <div className="flex-grow py-6 space-y-4 text-white overflow-y-auto">
+      <div className="flex-grow py-6 space-y-4 text-white overflow-y-auto min-h-[300px]">
         <p className="font-bold text-white drop-shadow-md">
           설문에 참여하시기 전, 다음 사항을 주의 깊게 읽어주세요.
         </p>
@@ -69,7 +76,7 @@ export default function ConsentPage() {
         <div className="space-y-3">
           <div>
             <label htmlFor="participant-id" className="block text-white text-sm font-semibold mb-2 drop-shadow-sm">
-              참가자 번호 (실험자가 입력)
+              참가자 번호 (실험자가 입력) <span className="text-red-400">*</span>
             </label>
             <input
               id="participant-id"
@@ -82,7 +89,7 @@ export default function ConsentPage() {
           </div>
           <div>
             <label htmlFor="participant-name" className="block text-white text-sm font-semibold mb-2 drop-shadow-sm">
-              이름
+              이름 <span className="text-red-400">*</span>
             </label>
             <input
               id="participant-name"
@@ -92,6 +99,31 @@ export default function ConsentPage() {
               placeholder="홍길동"
               className="w-full px-4 py-3 rounded-lg glass-panel text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-white/40 transition-all"
             />
+          </div>
+          <div>
+            <label className="block text-white text-sm font-semibold mb-2 drop-shadow-sm">
+              조건 (실험자가 입력) <span className="text-red-400">*</span>
+            </label>
+            <div className="space-y-2">
+              {["H Overlay", "L Overlay", "S Overlay", "H Portal", "L Portal", "S Portal"].map((option) => (
+                <label
+                  key={option}
+                  className="flex items-center p-3 rounded-lg transition-all duration-200 cursor-pointer glass-panel hover:bg-white/20"
+                >
+                  <input
+                    type="radio"
+                    name="condition"
+                    value={option}
+                    checked={condition === option}
+                    onChange={(e) => setCondition(e.target.value)}
+                    className="w-5 h-5 mr-3 accent-purple-500"
+                  />
+                  <span className="text-white select-none drop-shadow-sm">
+                    {option}
+                  </span>
+                </label>
+              ))}
+            </div>
           </div>
         </div>
 

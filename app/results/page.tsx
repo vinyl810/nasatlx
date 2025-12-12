@@ -19,6 +19,7 @@ interface SurveyResult {
   ip: string;
   participantId?: string;
   participantName?: string;
+  condition?: string;
   responses: {
     [key: string]: number;
   };
@@ -60,6 +61,7 @@ export default function ResultsPage() {
     const headers = [
       "참가자 번호",
       "이름",
+      "조건",
       "제출 시간",
       "IP 주소",
       ...questions.map(q => q.title),
@@ -68,6 +70,7 @@ export default function ResultsPage() {
     const rows = results.map((result) => [
       result.participantId || "",
       result.participantName || "",
+      result.condition || "",
       new Date(result.timestamp).toLocaleString("ko-KR"),
       result.ip,
       ...questions.map(q => result.responses?.[q.id] !== undefined ? result.responses[q.id] : ""),
@@ -180,6 +183,9 @@ export default function ResultsPage() {
                         이름
                       </th>
                       <th className="border border-white/20 px-4 py-3 text-left text-sm font-bold text-white">
+                        조건
+                      </th>
+                      <th className="border border-white/20 px-4 py-3 text-left text-sm font-bold text-white">
                         제출 시간
                       </th>
                       <th className="border border-white/20 px-4 py-3 text-left text-sm font-bold text-white">
@@ -209,6 +215,9 @@ export default function ResultsPage() {
                         </td>
                         <td className="border border-white/20 px-4 py-3 text-sm text-white/80">
                           {result.participantName || "-"}
+                        </td>
+                        <td className="border border-white/20 px-4 py-3 text-sm text-white/80">
+                          {result.condition || "-"}
                         </td>
                         <td className="border border-white/20 px-4 py-3 text-sm text-white/80 whitespace-nowrap">
                           {new Date(result.timestamp).toLocaleString("ko-KR")}
